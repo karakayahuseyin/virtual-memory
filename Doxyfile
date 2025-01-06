@@ -1,0 +1,70 @@
+# Doxygen project configuration file
+
+# Project information
+PROJECT_NAME           = "Virtual Memory Manager"
+PROJECT_BRIEF          = "Bir bellek yönetim sistemi"
+PROJECT_LOGO           = ""
+
+# Input and output directories
+OUTPUT_DIRECTORY       = ./docs
+INPUT                  = ./src ./include
+FILE_PATTERNS          = *.cpp *.c *.h
+RECURSIVE              = YES
+
+# Document language
+OUTPUT_LANGUAGE        = Turkish
+
+# Documentation formats
+GENERATE_HTML          = YES
+GENERATE_LATEX         = YES
+GENERATE_MAN           = NO
+GENERATE_XML           = NO
+
+# LaTeX-specific settings
+LATEX_OUTPUT           = latex
+LATEX_CMD_NAME         = pdflatex
+LATEX_MAKEINDEX_CMD    = makeindex
+PDF_HYPERLINKS         = YES
+USE_PDFLATEX           = YES
+LATEX_BATCHMODE        = NO
+LATEX_HIDE_INDICES     = NO
+LATEX_SOURCE_CODE      = YES
+
+# Include and exclude files
+EXCLUDE_PATTERNS       = */test/*
+
+# Extraction settings
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+EXTRACT_LOCAL_CLASSES  = YES
+EXTRACT_LOCAL_METHODS  = YES
+
+# Source code highlighting
+SOURCE_BROWSER         = YES
+INLINE_SOURCES         = YES
+
+# Index options
+FULL_PATH_NAMES        = YES
+SHORT_NAMES            = NO
+
+# Warnings and messages
+WARN_IF_UNDOCUMENTED   = YES
+WARN_NO_PARAMDOC       = YES
+WARN_LOGFILE           = doxygen_warnings.log
+
+# Strip path
+STRIP_FROM_PATH        = ./src
+
+# HTML-specific settings
+HTML_OUTPUT            = html
+HTML_DYNAMIC_SECTIONS  = YES
+HTML_COLORSTYLE_HUE    = 220
+HTML_COLORSTYLE_SAT    = 100
+HTML_COLORSTYLE_GAMMA  = 80
+
+# PDF output settings (via LaTeX)
+GENERATE_LATEX         = YES
+LATEX_OUTPUT           = latex
+PDF_HYPERLINKS         = YES
+USE_PDFLATEX           = YES

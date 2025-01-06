@@ -1,25 +1,63 @@
-#pragma once //Bu header dosyasının birden fazla kullanılmasını engeller.
+/**
+ * @file memory.h
+ * @brief Bellek yönetimi için temel yapıların ve işlevlerin tanımları.
+ */
+
+#ifndef MEMORY_H
+#define MEMORY_H
 
 #include <stddef.h>
 #include "data.h"
 
-typedef struct s_memoryBlock
-{
-    /* data */
-    size_t size;                            //boyut
-    d_byte* data;                            //veri
-    char address;                        //baslangic adresi
-    struct s_memoryBlock* next;             //sonraki blok
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/**
+ * @struct memoryBlock
+ * @brief Bellek yönetimi için bir blok yapısı.
+ */
+typedef struct s_memoryBlock {
+    size_t size;            /**< Bloğun boyutu (bayt olarak). */
+    d_byte* data;           /**< Bloğa atanmış veri. */
+    int address;            /**< Bloğun başlangıç adresi. */
+    struct s_memoryBlock* next; /**< Sonraki bloğa işaretçi. */
 } memoryBlock;
 
-typedef struct s_memoryList
-{
-    /* data */
-    memoryBlock* head;          //baslangic
-    size_t total_size;          //boyut
+/**
+ * @struct memoryList
+ * @brief Bellek bloklarını yönetmek için kullanılan liste yapısı.
+ */
+typedef struct s_memoryList {
+    memoryBlock* head;      /**< Listenin ilk bloğuna işaretçi. */
+    size_t total_size;      /**< Listenin toplam boyutu. */
 } memoryList;
 
-// memoryList* initializeList(void* start_address, size_t total_size);  //Sıfırdan liste olusuturur
-memoryBlock* findBlock(memoryList* list, size_t size);        //First in uygulanacak ve ilk gelen bellek bloğu eşleşecek.
-void mergeFreeBlocks(memoryList* list);                              //Serbest blokları birlestirir.  
-// void printMemoryBlocks(memoryList* list);                            //Memory listesini yazdırır.
+/**
+ * @brief Uygun boyutta bir bellek bloğu bulur.
+ *
+ * @param list Bellek listesi.
+ * @param size İstenen boyut.
+ * @return Uygun bellek bloğu ya da NULL.
+ */
+memoryBlock* findBlock(memoryList* list, size_t size);
+
+/**
+ * @brief Boş bellek bloklarını birleştirir.
+ *
+ * @param list Bellek listesi.
+ */
+void mergeFreeBlocks(memoryList* list);
+
+/**
+ * @brief Bellek listesindeki blokları yazdırır.
+ *
+ * @param list Bellek listesi.
+ */
+void printMemoryList(memoryList* list);
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // MEMORY_H

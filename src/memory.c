@@ -1,27 +1,41 @@
-#include "memory.h"
-#include <stdio.h>
-#include <stdlib.h>
+/**
+ * @file memory.c
+ * @brief Bellek yönetimi için işlevlerin uygulamaları.
+ */
 
+#include "memory.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+/**
+ * @brief Uygun boyutta bir bellek bloğu bulur.
+ *
+ * @param list Bellek listesi.
+ * @param size İstenen boyut.
+ * @return Uygun bellek bloğu ya da NULL.
+ */
 memoryBlock* findBlock(memoryList* list, size_t size) {
     if (!list || !list->head) {
-        printf("Liste bos!\n");
         return NULL;
     }
 
     memoryBlock* current = list->head;
 
     while (current != NULL) {
-        if (current->data == 0 && current->size >= size) { // Uygun boş blok bulundu
-            if (current->size > size) { // Blok bölünebilir
+        if (current->data == NULL && current->size >= size) {
+            if (current->size > size) {
                 memoryBlock* new_block = (memoryBlock*)malloc(sizeof(memoryBlock));
                 if (!new_block) {
-                    printf("Yeni blok oluşturulamadi!\n");
                     return NULL;
                 }
 
                 new_block->size = current->size - size;
-                new_block->data = 0;
-                new_block->address = (char)((unsigned char)current->address + (unsigned int)size);
+                new_block->data = NULL;
+                new_block->address = current->address + size;
                 new_block->next = current->next;
 
                 current->size = size;
@@ -32,47 +46,51 @@ memoryBlock* findBlock(memoryList* list, size_t size) {
         current = current->next;
     }
 
-    return NULL; // Uygun blok bulunamadı
+    return NULL;
 }
 
+/**
+ * @brief Yeni bir bellek bloğu oluşturur.
+ *
+ * @param previous Önceki bellek bloğu.
+ * @param size Yeni bloğun boyutu.
+ * @return Yeni bellek bloğu ya da NULL.
+ */
 memoryBlock* createMemoryBlock(memoryBlock* previous, size_t size) {
     if (!previous || previous->size < size) {
-        printf("Hata: Önceki blok geçersiz veya yetersiz boyut!\n");
         return NULL;
     }
 
-    // Yeni blok için bellek ayır
     memoryBlock* new_block = (memoryBlock*)malloc(sizeof(memoryBlock));
     if (!new_block) {
-        printf("Hata: Yeni blok oluşturulamadi!\n");
         return NULL;
     }
 
-    // Yeni bloğu yapılandır
     new_block->size = size;
-    new_block->data = 0; // Varsayılan olarak boş
-    new_block->address = previous->address; // Önceki bloğun başlangıcını al
-    new_block->next = previous->next; // Önceki bloğun 'next' pointer'ını al
+    new_block->data = NULL;
+    new_block->address = previous->address;
+    new_block->next = previous->next;
 
-    // Önceki bloğu güncelle
-    previous->size -= size; // Önceki bloktan istenen boyut çıkar
-    previous->address += size; // Önceki bloğun başlangıcını kaydır
-    previous->next = new_block; // Önceki bloğun 'next' pointer'ını yeni bloğa bağla
+    previous->size -= size;
+    previous->address += size;
+    previous->next = new_block;
 
-    return new_block; // Yeni bloğu döndür
+    return new_block;
 }
 
+/**
+ * @brief Boş bellek bloklarını birleştirir.
+ *
+ * @param list Bellek listesi.
+ */
 void mergeFreeBlocks(memoryList* list) {
-    if (!list || !list->head)
-    {
-        /* code */
-        printf("Liste bos!\n");
+    if (!list || !list->head) {
         return;
     }
-    
+
     memoryBlock* current = list->head;
     while (current != NULL && current->next != NULL) {
-        if (current->data == 0 && current->next->data == 0) { //Hem mevcut hemde sonraki blok free ise birlestirir.
+        if (current->data == NULL && current->next->data == NULL) {
             current->size += current->next->size;
             memoryBlock* temp = current->next;
             current->next = temp->next;
@@ -83,22 +101,22 @@ void mergeFreeBlocks(memoryList* list) {
     }
 }
 
-// void printMemoryBlocks(memoryList* list) {
-//     if (!list || !list->head)
-//     {
-//         /* code */
-//         printf("Liste bos!\n");
-//         return;
-//     }
-    
-//     memoryBlock* current = list->head;
-//     int block_count = 0;
-//     while (current != NULL) {
-//         printf("Blok %d:\n", ++block_count);
-//         printf("  Adres: %p\n", current->address);
-//         printf("  Boyut: %zu byte\n", current->size);
-//         // printf("  Durum: %s\n", isFree(current) ? "Serbest" : "Dolu");
-//         printf("  Sonraki: %p\n\n", (void*)current->next);
-//         current = current->next;
-//     }
-// }
+/**
+ * @brief Bellek listesindeki blokları yazdırır.
+ *
+ * @param list Bellek listesi.
+ */
+void printMemoryList(memoryList* list) {
+    memoryBlock* block = list->head;
+    while (block) {
+        printf("[%d] Boyut: %zu, Durum: %s\n",
+               block->address,
+               block->size,
+               block->data ? "Dolu" : "Bos");
+        block = block->next;
+    }
+}
+
+#ifdef __cplusplus
+}
+#endif

@@ -1,2 +1,5 @@
 .vscode/
 build/
+docs/
+*.log
+*.txt
