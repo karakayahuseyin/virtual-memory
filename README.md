@@ -41,9 +41,9 @@ Kullanıcı, komutları bir dosyaya yazar ve program bu dosyayı işleyerek komu
 
 - **Dosya Formatı**: Her bir komut, dosyada bir satırda olmalıdır. 
   Örnek:
-    DATA8 AA 0x11
-    DATA16 BB 0x12
-    PRINT
-    GET AA
-    FREE BB
-    PRINT
+  DATA8 AA 0x11
+  DATA16 BB 0x12
+  PRINT
+  GET AA
+  FREE BB
+  PRINT
