@@ -5,9 +5,9 @@ Bu proje, **işletim sistemleri** alanında bellek yönetiminin temel prensipler
 Proje, hem kullanıcı komutlarını işleyebilen bir **Komut Satırı Arayüzü (CLI)** hem de otomatik işleyiş için **dosya tabanlı komut modunu** desteklemektedir. Ayrıca, gömülü sistemler ve masaüstü sistemlerde kullanılabilirliği hedef alınmıştır.
 
 İşletim Sistemleri dersi dönem sonu projesi olarak hazırlanmıştır. Katkı verenler:
-[Eren Karakuş](https://github.com/eren-karakus0)
-[Yusuf Bilal Usta](https://github.com/yusufbilalusta)
-[A. Hamza Gündoğdu](https://github.com/hamzagnd)
+- [Eren Karakuş](https://github.com/eren-karakus0)
+- [Yusuf Bilal Usta](https://github.com/yusufbilalusta)
+- [A. Hamza Gündoğdu](https://github.com/hamzagnd)
 
 ---
 
@@ -41,9 +41,9 @@ Kullanıcı, komutları bir dosyaya yazar ve program bu dosyayı işleyerek komu
 
 - **Dosya Formatı**: Her bir komut, dosyada bir satırda olmalıdır. 
   Örnek:
-  DATA8 AA 0x11
-  DATA16 BB 0x12
-  PRINT
-  GET AA
-  FREE BB
-  PRINT
+  - DATA8 AA 0x11
+  - DATA16 BB 0x12
+  - PRINT
+  - GET AA
+  - FREE BB
+  - PRINT
